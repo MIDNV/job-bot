@@ -1,0 +1,125 @@
+candidate:
+  name: "Glen Owen Diaz Thornton"
+  location: "Santa Cruz de Tenerife, Spain"
+  country: "ES"
+  languages: ["en", "es"]
+  remote_only: true
+
+# ----- FILTRO GEOGRÁFICO -----
+# Si location_required es true, la oferta DEBE contener
+# al menos uno de los location_keywords para pasar el filtro
+location_required: true
+
+location_keywords:
+  # España explícita
+  - "spain"
+  - "españa"
+  - "espana"
+  - "espanya"
+
+  # Ciudades / regiones españolas
+  - "madrid"
+  - "barcelona"
+  - "valencia"
+  - "sevilla"
+  - "seville"
+  - "bilbao"
+  - "málaga"
+  - "malaga"
+  - "zaragoza"
+  - "tenerife"
+  - "canarias"
+  - "canary islands"
+  - "santa cruz de tenerife"
+  - "islas canarias"
+
+  # Modalidades remotas que aceptan España
+  - "remote spain"
+  - "spain remote"
+  - "spain (remote)"
+  - "remote - spain"
+  - "remote, spain"
+
+  # Cobertura EU / global (suelen aceptar España)
+  - "europe"
+  - "european union"
+  - "eu remote"
+  - "remote eu"
+  - "remote - eu"
+  - "emea"
+  - "worldwide"
+  - "anywhere"
+
+# ----- KEYWORDS DE ROL (peso = puntos si aparece) -----
+keywords:
+  # Alta prioridad
+  "zendesk": 10
+  "salesforce service cloud": 10
+  "servicenow": 10
+  "saas support": 10
+  "customer success manager": 8
+  "technical support": 8
+  "support specialist": 8
+  "support engineer": 8
+
+  # Media prioridad (inglés)
+  "gaming support": 7
+  "game support": 7
+  "player support": 7
+  "bilingual support": 6
+  "escalation management": 6
+  "helpdesk": 5
+  "service desk": 5
+  "customer support": 5
+
+  # Media prioridad (español)
+  "soporte técnico": 8
+  "soporte tecnico": 8
+  "atención al cliente": 6
+  "atencion al cliente": 6
+  "soporte al cliente": 6
+  "soporte": 4
+
+  # Baja prioridad
+  "customer experience": 3
+  "CSAT": 3
+  "NPS": 3
+  "troubleshooting": 3
+  "español": 3
+  "spanish": 3
+  "english": 2
+  "remote": 2
+
+# ----- ROLES QUE NO QUIERES (descarta la oferta) -----
+blacklist:
+  # Desarrollo / ingeniería
+  - "developer"
+  - "full-stack"
+  - "fullstack"
+  - "frontend"
+  - "backend"
+  - "software engineer"
+  - "devops"
+  - "data scientist"
+  - "machine learning"
+
+  # Ventas / negocio
+  - "account executive"
+  - "sales representative"
+  - "sales manager"
+  - "business development"
+  - "product manager"
+  - "product lead"
+  - "product owner"
+  - "marketing"
+
+  # Otros
+  - "senior solution engineer"
+  - "5+ years"
+  - "on-site only"
+  - "unpaid"
+  - "internship"
+  - "becario"
+
+# Puntuación mínima para que pase el filtro
+min_score: 10

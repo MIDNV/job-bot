@@ -1,0 +1,34 @@
+# Entorno virtual de Python
+.venv/
+venv/
+env/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Secretos y configuración local
+.env
+.env.local
+
+# Datos locales (BD, JSONs de resultados)
+data/
+logs/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dist / build (por si acaso)
+dist/
+build/
+*.egg-info/
