@@ -1,16 +1,28 @@
 #Requires -Version 5.1
-param(
-    [string]$Log = "logs\job-bot_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
-)
 
-$ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
+$timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+$Log = "logs\job-bot_$timestamp.log"
+
+$env:PYTHONIOENCODING = "utf-8"
+$env:PYTHONUTF8 = "1"
+
 $logDir = Split-Path -Parent $Log
-if ($logDir -and -not (Test-Path $logDir)) { New-Item -ItemType Directory -Path $logDir | Out-Null }
+if ($logDir -and -not (Test-Path $logDir)) {
+    New-Item -ItemType Directory -Path $logDir -Force | Out-Null
+}
 
-Write-Host "🤖 Ejecutando job-bot desde $root..." -ForegroundColor Cyan
-& ".\.venv\Scripts\python.exe" -m src.main 2>&1 | ForEach-Object { "$_" } | Tee-Object -FilePath $Log
+Write-Host "Ejecutando job-bot desde $root..." -ForegroundColor Cyan
+Write-Host ""
 
-Write-Host "`n📄 Log guardado en: $root\$Log" -ForegroundColor Green
+$prevErrorAction = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+
+& ".\.venv\Scripts\python.exe" -m src.main *>&1 | Tee-Object -FilePath $Log
+
+$ErrorActionPreference = $prevErrorAction
+
+Write-Host ""
+Write-Host "Log guardado en: $root\$Log" -ForegroundColor Green

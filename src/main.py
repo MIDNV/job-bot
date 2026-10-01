@@ -1,3 +1,4 @@
+import sys
 import os
 import yaml
 import logging
@@ -8,14 +9,19 @@ from src.matcher import filter_and_rank
 from src.storage import save_new_jobs, export_json
 from src.notifier import notify_telegram
 
+# Configurar logging para que escriba en stdout (evita NativeCommandError de PowerShell)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    stream=sys.stdout,
 )
+
+# Crear el logger que usaremos en todo el archivo
 log = logging.getLogger("job-bot")
 
+# Terminos de busqueda que se pasan a cada scraper
 SEARCH_TERMS = [
-    # Inglés
+    # Ingles
     "technical support",
     "customer success",
     "zendesk",
@@ -24,15 +30,17 @@ SEARCH_TERMS = [
     "helpdesk",
     "customer support",
     "support specialist",
-    # Español
-    "soporte técnico",
-    "atención al cliente",
+    # Espanol
+    "soporte tecnico",
+    "atencion al cliente",
     "soporte al cliente",
 ]
+
 
 def load_profile(path: str = "config/profile.yaml") -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
+
 
 def main():
     load_dotenv()
@@ -46,7 +54,7 @@ def main():
         for term in SEARCH_TERMS:
             try:
                 results = scraper(term)
-                log.info("[%s] '%s' → %d resultados", name, term, len(results))
+                log.info("[%s] '%s' -> %d resultados", name, term, len(results))
                 for job in results:
                     uid = f"{job['source']}::{job['id']}"
                     if uid in seen_uids:
@@ -69,9 +77,10 @@ def main():
 
     print("\n===== TOP OFERTAS NUEVAS =====")
     for j in new_jobs[:15]:
-        print(f"  ★ {j['score']:>3}  {j['title']}  @ {j.get('company')}  [{j['source']}]")
+        print(f"  * {j['score']:>3}  {j['title']}  @ {j.get('company')}  [{j['source']}]")
         print(f"      {j['url']}")
     print("==============================\n")
+
 
 if __name__ == "__main__":
     main()
